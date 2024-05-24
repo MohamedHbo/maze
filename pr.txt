@@ -1,0 +1,254 @@
+1-It seems there is an issue with your roles which allows an admin to escalate his own privileges to owner and takeover the organization.
+
+
+Create an account, accountA
+Create another account, accountB
+Create an organization under accountA and invite accountB to that organization as admin
+Accept invitation with accountB and log out
+Confirm accountB for the organization on accountA
+Log in with accountB
+Navigate to the organization -> invite users -> edit accountB user and change to owner
+See that the change worked and accountB is now owner.
+To proceed with organization takeover, remove the original owner
+Note that (after login and logout) the original owner no longer is in the organization
+
+
+Impact
+Anyone who is an admin on an organization can take total control of the organization and kick the original owner out.
+
+----------------------------
+2-I have found a vulnerability, Which is you can change/update others Fullname without there knowledge.
+
+Step-by-step Reproduction Instructions
+1.) login your account https://wakatime.com/login
+2.) after you login go to Leaderboard then click Create new one or in easy way is to go here https://wakatime.com/leaders/new
+3.) Now put any name you want e.g. Test then hit Ceate Leaderboard
+4.) Then you will see Leaderboards · Test · Notifications or notification page, something like that, then just click Daily
+5.) Go to Members Panel and invite other users. just fill the fullname any name you want e.g. test then fill up the target email e.g. ██████@gmail.com then hit Send Invitation
+6.) after you do step 5. you will see the inviteded victim in Members panel
+7.) You will notice the Edit Icon on the Victim fullname, Click that.
+8.) Them prompt box will pop up saying Enter new name for Test, then just put the Fullname in input a value e.g. HACKED.
+9.) Now go login the victim email, and you will notice that the fullname of the victim was change into HACKED
+
+
+
+----------------------
+3-No rate limit in comments 
+1.) write comment 
+2.) proxy in comment 
+3.) set payloads NULL and Continye idenefielity
+4.) Start attack
+
+----------------------------
+Find HTML Injection on Main Domain
+
+1.)Log Out from Target Site 
+2.)Observe the URL Parameters  "https://redacted.com/?fm=You+are+now+logged+out&ft=notice"
+3.)Modify the fm Parameter  "https://redacted.com/?fm=Test+message&ft=notice"
+4.)Test JavaScript Payloads:Attempt to inject JavaScript payloads in the fm parameter.
+5.)Experiment with ft Parameter "https://redacted.com/?fm=Test+message&ft=alert"
+6.)Inject HTML Payload:Modify the fm parameter to include an HTML anchor (<a>) tag.
+" https://redacted.com/?fm=You+are+now+logged+out+%3Ca%20href=%22https://google.com%22%3Egoogle%3C/a%3E&ft=notice "
+
+--------------------------------------------
+HTML_Injection_on_password_reset_page
+
+1.)Create your account
+2.)Edit your name to <h1>attacker</h1> or "abc><h1>attacker</h1> and save it.
+3.)Request for a reset password and check your email.
+4.)You will notice the <h1> tag getting executed
+HTML injection are usually considered as low to medium severity bugs but you can escalate the severity by serving a malicious link by using <a href> for eg: <h1>attacker</h1><a href="your-controlled-domain"Click here</a>
+
+--------------------------------------------
+
+**********************************************
+Broken Authentication And Session Management.
+***********************************************
+Old Session Does Not Expire After Password Change:
+
+1.)create An account On Your Target Site
+2.)Login Into Two Browser With Same Account(Chrome, FireFox.You Can Use Incognito Mode As well) 
+3.)Change You Password In Chrome, On Seccessfull Password Change Referesh Your Logged in Account In FireFox/Incognito Mode.
+4.)If you'r still logged in Then This Is a Bug
+
+-----------------------------------------------
+Server security misconfiguration -> Lack of security headers -> Cache control for a security page
+
+1.) Login to the application
+2.) Navigate around the pages
+3.) Logout
+4.) Press (Alt+left-arrow) buttons
+5.) If you are logged in or can view the pages navigated by the user. Then you found a bug.
+
+Impact: At a PC cafe, if a person was in a very important page with alot of details and logged out, then another person comes and clicks back (because he didnt close the browser) then data is exposed. User information leaked
+
+---------------------------------------------------
+Broken Authentication To Email Verification Bypass (P4):Broken Authentication and Session Management >> Failure to Invalidate Session >> On Password Reset and/or Change
+
+1.)First You need to make a account & You will receive a Email verification link.
+2.)Application in my case give less Privileges & Features to access if not verified.
+3.)Logged into the Application & I change the email Address to Email B.
+4.)A Verification Link was Send & I verified that.
+5.) Now I again Changed the email back to Email I have entered at the time of account creation.
+6.) It showed me that my Email is Verified.
+7.) Hence , A Succesful Email verfication Bypassed as I haven't Verified the Link which was sent to me in the time of account creation still my email got verified.
+8.)Didn't Receive any code again for verification when I changed back my email & When I open the account it showed in my Profile that its Verified Email.
+
+
+
+Impact : Email Verfication was bypassed due to Broken Authentication Mechanism , Thus more Privileged account can be accessed by an attacker making website prone to Future Attacks.
+----------------------------------------------------
+Email Verification Bypass (P3/P4)
+
+1.)First You need to Create an account with Your Own Email Address.
+2.)After Creating An Account A Verification Link will be sent to your account.
+3.)Dont Use The Email Verification link. Change Your Email to Victim's Email.
+4.)Now Go in Your Email and Click on Your Own Email Verification Link.
+5.)if the Victim's Email Get Verified then This is a Bug.
+
+Impact : Email Verfication Bypass
+
+---------------------------------------------------------
+Insufficient account process validation leads to account takeover (P3/P4):
+
+1.) Create an account on the website.
+2.) Go to profile section. And Change & update your details in the name parameter and before saving it Open Burp suite, turn the proxy on and then click on Save.
+3.) Now capture the request in Burp suite and send it to the Repeater tab.
+4.) Now log out from the website and go back to the Burp suite.
+5.) Now change the details email & name parameters and click on "Go" in the repeater tab.
+6.) Now you will be able to see 200 ok response from the web server.
+7.) Now, login into your account and go to the Profile section to confirm
+
+-----------------------------------------------------------
+*********************************
+Weak_password_policy
+*********************************
+
+Summary:
+A weak password policy increases the probability of an attacker having success using brute force and dictionary attacks against user accounts. An attacker who can determine user passwords can take over a user's account and potentially access sensitive data in the application.
+
+There are two ways in which this can be checked
+
+First Way
+Check if you can use Password same as that of Email Address
+Check if you can use Username same as that of Email Address
+Try above mentioned when Resetting Password , Creating Account , Changing Password from Account Settings
+
+++++++++++++++++++++++++++++
+
+Second Way
+Check if you can use Password some Weak Passwords such as 123456, 111111 , abcabc , qwerty123
+Try above mentioned when Resetting Password , Creating Account , Changing Password from Account Settings
+Applications usually have Restrictions on Password while Creating Account, Make sure you check for both the cases when Resetting Password
+
+-------------------------------------------------------------------
+****************************************************
+Hunting_for_bugs_in_signup
+****************************************************
+1. Duplicate registration / Overwrite existing user.
+
+1.)Create first account in application with email say abc@gmail.com and password.
+2.)Logout of the account and create another account with same email and different password.
+3.)You can even try to change email case in some case like from abc@gmail.com to Abc@gmail.com
+4.)Finish the creation process — and see that it succeeds
+5.)Now go back and try to login with email and the new password. You are successfully logged in.
+
+https://hackerone.com/reports/187714
+
+--------------------------------------------------------------------
+2. DOS at Name/Password field in Signup Page.
+
+1.)Go Sign up form.
+2.)Fill the form and enter a long string in password
+3.)Click on enter and you’ll get 500 Internal Server error if it is vulnerable.
+
+https://hackerone.com/reports/223854
+https://hackerone.com/reports/738569
+
+--------------------------------------------------------------------
+3. Cross-Site Scripting (XSS) in username, account name for registration.
+
+Now, for testing Signup page for XSS we can simply insert XSS payoad in fields like: username, email, password,etc.
+
+Payload for Username field : <svg/onload=confirm(1)>
+Payload for Email field : “><svg/onload=confirm(1)>”@x.y
+
+https://hackerone.com/reports/196989
+https://hackerone.com/reports/470206
+https://hackerone.com/reports/119090
+
+---------------------------------------------------------------------
+4. No Rate Limit at Signup Page.
+
+You can easily test for it with Burp Intruder.
+1.) Capture the signup request and send it to Intruder.
+2.) Add different emails as payload .
+3.) Fire up Intruder, And check whether it returns 200 OK.
+
+https://hackerone.com/reports/905692
+https://hackerone.com/reports/97609
+https://hackerone.com/reports/262830
+
+-------------------------------------------------------------------------
+5. Email verification bypass after signup:-
+
+1.) Sing up on the web application as attacker@mail.com
+2.) You will receive a confirmation email on attacker@mail.com, do not open that link now.
+3.) The application may ask for confirming your email, check if it allows navigating to account settings page.
+4.) On settings page check if you can change the email.
+5.) If allowed, change the email to victim@mail.com.
+6.) Now you will be asked to confirm victim@mail.com by opening the confirmation link received on victim@mail.com, insted of opening the new link go to attacker@mail.com inbox and open the previous received link.
+7.) If the application verifies vitim@mail.com by using perivious verification link received on attacker mail, then this is a email verification bypass. 
+
+https://hackerone.com/reports/1040047
+https://hackerone.com/reports/617896
+https://hackerone.com/reports/737169
+
+-----------------------------------------------------------------------------
+*************************
+JWT
+***********************
+https://www.youtube.com/watch?v=ghfmx4pr1Qg
+https://github.com/KathanP19/HowToHunt/blob/master/JWT/OLD_JWT_ATTACK_Notes.md
+
+tool:
+jwt-hack
+https://github.com/hahwul/jwt-hack
+--------------------------------------------------------------------------
+*************************
+Race	
+************************
+https://github.com/KathanP19/HowToHunt/blob/master/Race_Condition/race_conditions.md
+
+-------------------------------------------------------------------------
+*******************
+Default Credentials
+*****************
+
+https://www.youtube.com/watch?v=EeYq2r-ZI-Q
+https://github.com/daffainfo/AllAboutBugBounty/blob/master/Misc/Default%20Credentials.md
+
+----------------------------------------------------------------------------
+************************
+CRLF Injection
+***********************
+
+https://github.com/daffainfo/AllAboutBugBounty/blob/master/CRLF%20Injection.md
+
+---------------------------------------------------------------------------
+
+GITHUB :
+
+https://github.com/HolyBugx/HolyTips/tree/main/Scripts
+
+https://www.linkedin.com/posts/omar-aljabr-291025197_medium-activity-7175077323497431040-T11t?utm_source=share&utm_medium=member_desktop
+https://www.linkedin.com/posts/black-hat-ethical-hacking_xss-bugbounty-bugbountytips-activity-7166809256271273984-iWqO?utm_source=share&utm_medium=member_desktop
+https://www.linkedin.com/posts/muddssir-husain_bugbountytips-bughunting-bugcrowd-activity-7154278982031425536-Dqx9?utm_source=share&utm_medium=member_desktop
+https://www.linkedin.com/posts/omar-aljabr-291025197_account-takeover-vulnerability-that-resulted-activity-7150737732007288836-XGLX?utm_source=share&utm_medium=member_desktop
+https://github.com/Az0x7/vulnerability-Checklist
+https://www.linkedin.com/posts/hakluke_ive-created-lots-of-useful-hacking-tools-activity-7143556337275187200-0sJa?utm_source=share&utm_medium=member_desktop
+https://www.linkedin.com/posts/omar-aljabr-291025197_dork-bugbunty-cybersecurity-ugcPost-7140596867402199041-ZbUm?utm_source=share&utm_medium=member_desktop
+https://www.linkedin.com/posts/jayesh-madnani_bugbounty-securitytips-ethicalhacking-activity-7127224357608656896-gMs-?utm_source=share&utm_medium=member_desktop
+
+
+
